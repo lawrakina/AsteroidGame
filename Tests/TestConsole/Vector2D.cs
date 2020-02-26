@@ -33,7 +33,7 @@ namespace TestConsole
         public override bool Equals(object obj)
         {
             if (obj is Vector2D) { return ((Vector2D)obj).X == X && ((Vector2D)obj).Y == Y; }
-            return base.Equals(obj);
+            return false;
         }
 
         public override int GetHashCode()
