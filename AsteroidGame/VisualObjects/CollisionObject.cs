@@ -8,22 +8,15 @@ using System.Threading.Tasks;
 
 namespace AsteroidGame.VisualObjects
 {
-    public class Asteroid : ImageObject, ICollision
+    public abstract class CollisionObject : VisualObject, ICollision
     {
-        public Asteroid(Point Position, Point Direction, int Size) 
-            : base(Position, Direction, new Size(Size,Size), Properties.Resources.Asteroid)
+        protected CollisionObject(Point Position, Point Direction, Size Size) : base(Position, Direction, Size)
         {
-            
         }
 
         public bool CheckCollision(ICollision obj)
         {
             return Rect.IntersectsWith(obj.Rect);
-        }
-
-        public override void Update()
-        {
-            base.Update();
         }
     }
 }
