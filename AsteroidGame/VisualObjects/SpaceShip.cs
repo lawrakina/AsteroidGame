@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AsteroidGame.VisualObjects
 {
-    public class SpaceShip : VisualObject, ICollision
+    public class SpaceShip : VisualObject
     {
         public SpaceShip(Point Position, Point Direction, Size Size) 
             : base(Position, Direction, Size)

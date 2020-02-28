@@ -1,4 +1,5 @@
 ﻿using AsteroidGame.VisualObjects;
+using AsteroidGame.VisualObjects.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -61,7 +62,7 @@ namespace AsteroidGame
             for (var i = 0; i < start_count; i++)
             {
                 game_objects.Add(new Star(
-                    new Point(random.Next(0, Width), random.Next(0,Height)),
+                    new Point(random.Next(0, Width), random.Next(0, Height)),
                     new Point(-1 * random.Next(1, star_max_speed), 0),
                     star_size));
             }
@@ -72,7 +73,7 @@ namespace AsteroidGame
 
             for (var i = 0; i < ellipses_count; i++)
             {
-                game_objects.Add( new EllipseObject(
+                game_objects.Add(new EllipseObject(
                     new Point(600, i * 20),
                     new Point(15 - i, 20 - i),
                     new Size(ellipses_size_x, ellipses_size_y)));
@@ -86,7 +87,7 @@ namespace AsteroidGame
                 game_objects.Add(new Asteroid(
                     new Point(random.Next(0, Width), random.Next(0, Height)),
                     new Point(-1 * random.Next(1, asteroid_max_speed), 0),
-                    random.Next(5,asteroid_max_size)));
+                    random.Next(5, asteroid_max_size)));
             }
 
             /*__Stars = new Star[100];
@@ -122,7 +123,7 @@ namespace AsteroidGame
                 star.Draw(g);*/
 
             foreach (var visual_object in __GameObjects)
-                visual_object.Draw(g);
+                visual_object?.Draw(g);
 
             __Bullet.Draw(g);
 
@@ -131,14 +132,27 @@ namespace AsteroidGame
 
         public static void Update()
         {
-            /*foreach (var star in __Stars)
-                star.Update();
-*/
             foreach (var visual_object in __GameObjects)
-                visual_object.Update();
+                visual_object?.Update();
+
             __Bullet.Update();
             if (__Bullet.Position.X > Width)
-                __Bullet = new Bullet(200);
+                __Bullet = new Bullet(new Random().Next(Width));
+
+            for (var i = 0; i < __GameObjects.Length; i++)
+            {
+                var obj = __GameObjects[i];
+                if (obj is ICollision)
+                {
+                    var collision_object = (ICollision)obj;
+                    if(__Bullet.CheckCollision(collision_object))
+                    {
+                        __Bullet = new Bullet(new Random().Next(Width));
+                        __GameObjects[i] = null;
+                        MessageBox.Show("Астероид закончился");
+                    }
+                }
+            }
         }
     }
 }
