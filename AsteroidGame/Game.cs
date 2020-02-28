@@ -52,7 +52,8 @@ namespace AsteroidGame
                 __Stars[j] = new Star(
                     new Point(Game.Width, j * random.Next(5, 50)),
                     new Point(-1 * j * random.Next(1, 3), 0),
-                    10);
+                    10,
+                    AsteroidGame.Properties.Resources.star);
             }
 
             __GameObjects = new VisualObject[30];
