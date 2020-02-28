@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AsteroidGame.VisualObjects;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace AsteroidGame
 
             random = new Random();
 
-            var timer = new Timer { Interval = 100 };
+            var timer = new Timer { Interval = 10 };
             timer.Tick += OnTimerTick;
             timer.Start();
 
@@ -43,27 +44,55 @@ namespace AsteroidGame
         }
 
         private static VisualObject[] __GameObjects;
-        private static Star[] __Stars;
+        //private static Star[] __Stars;
         public static void Load()
         {
-            __Stars = new Star[100];
-            for (var j = 0; j < __Stars.Length; j++)
+            var game_objects = new List<VisualObject>();
+
+            const int start_count = 150;
+            const int star_size = 20;
+            const int star_max_speed = 20;
+            for (var i = 0; i < start_count; i++)
             {
-                __Stars[j] = new Star(
-                    new Point(Game.Width, j * random.Next(5, 50)),
-                    new Point(-1 * j * random.Next(1, 3), 0),
-                    10,
-                    AsteroidGame.Properties.Resources.star);
+                game_objects.Add(new Star(
+                    new Point(random.Next(0, Width), random.Next(0,Height)),
+                    new Point(-1 * random.Next(1, star_max_speed), 0),
+                    star_size,
+                    Properties.Resources.star));
             }
 
-            __GameObjects = new VisualObject[30];
-            for (var i = 0; i < __GameObjects.Length; i++)
+            const int ellipses_count = 20;
+            const int ellipses_size_x = 20;
+            const int ellipses_size_y = 30;
+
+            for (var i = 0; i < ellipses_count; i++)
             {
-                __GameObjects[i] = new VisualObject(
+                game_objects.Add( new EllipseObject(
                     new Point(600, i * 20),
                     new Point(15 - i, 20 - i),
-                    new Size(20, 20));
+                    new Size(ellipses_size_x, ellipses_size_y)));
             }
+
+           /*__Stars = new Star[100];
+           for (var j = 0; j < __Stars.Length; j++)
+           {
+               __Stars[j] = new Star(
+                   new Point(Game.Width, j * random.Next(5, 50)),
+                   new Point(-1 * j * random.Next(1, 3), 0),
+                   10,
+                   AsteroidGame.Properties.Resources.star);
+           }
+
+           __GameObjects = new VisualObject[30];
+           *//*for (var i = 0; i < __GameObjects.Length; i++)
+           {
+               __GameObjects[i] = new VisualObject(
+                   new Point(600, i * 20),
+                   new Point(15 - i, 20 - i),
+                   new Size(20, 20));
+           }*/
+
+           __GameObjects = game_objects.ToArray();
         }
 
         public static void Draw()
@@ -71,8 +100,8 @@ namespace AsteroidGame
             var g = __Buffer.Graphics;
             g.Clear(Color.Black);
 
-            foreach (var star in __Stars)
-                star.Draw(g);
+            /*foreach (var star in __Stars)
+                star.Draw(g);*/
 
             foreach (var visual_object in __GameObjects)
                 visual_object.Draw(g);
@@ -82,9 +111,9 @@ namespace AsteroidGame
 
         public static void Update()
         {
-            foreach (var star in __Stars)
+            /*foreach (var star in __Stars)
                 star.Update();
-
+*/
             foreach (var visual_object in __GameObjects)
                 visual_object.Update();
 
