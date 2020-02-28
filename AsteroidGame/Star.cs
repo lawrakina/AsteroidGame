@@ -26,8 +26,11 @@ namespace AsteroidGame
                 _Position.X+_Size.Width, _Position.Y,
                 _Position.X, _Position.Y+_Size.Height);*/
             string fileName = @"star.png";
+            string pathToFile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "");
+            var indexOfStr = pathToFile.IndexOf("bin\\Debug");
+            pathToFile = pathToFile.Substring(0, indexOfStr)+ "star.png";
 
-            g.DrawImage(Image.FromFile(fileName),_Position);
+            g.DrawImage(Image.FromFile(pathToFile),_Position);
         }
 
         public override void Update()
