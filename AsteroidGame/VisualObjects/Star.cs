@@ -7,18 +7,14 @@ using System.Threading.Tasks;
 
 namespace AsteroidGame.VisualObjects
 {
-    class Star : VisualObject
+    class Star : ImageObject
     {
         private Image _Image;
 
-        public Star(Point Position, Point Direction, Size Size) : base(Position, Direction, Size)
+        public Star(Point Position, Point Direction, int Size) 
+            : base(Position, Direction, new Size(Size, Size), Properties.Resources.star)
         {
-        }
-
-        public Star(Point Position, Point Direction, int Size, Image Image) 
-            : base(Position, Direction, new Size(Size, Size))
-        {
-            _Image = Image;
+            _Image = Properties.Resources.star;
         }
 
         public override void Draw(Graphics g)

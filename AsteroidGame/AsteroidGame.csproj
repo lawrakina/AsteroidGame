@@ -49,7 +49,9 @@
     <Compile Include="Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VisualObjects\Asteroid.cs" />
     <Compile Include="VisualObjects\EllipseObject.cs" />
+    <Compile Include="VisualObjects\ImageObject.cs" />
     <Compile Include="VisualObjects\Star.cs" />
     <Compile Include="VisualObjects\VisualObject.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -80,6 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\star.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Asteroid.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
