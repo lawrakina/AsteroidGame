@@ -12,37 +12,49 @@ namespace AsteroidGame
     {
         private static BufferedGraphicsContext __Context;
         private static BufferedGraphics __Buffer;
+        private static Timer __Timer;
 
+        private static Random random;
         public static int Width { get; set; }
-        public static int Heght { get; set; }
-        /*static Game()
-        {
+        public static int Height { get; set; }
 
-        }
-*/
         public static void Initialize(Form form)
         {
             Width = form.Width;
-            Heght = form.Height;
+            Height = form.Height;
 
             __Context = BufferedGraphicsManager.Current;
             Graphics g = form.CreateGraphics();
-            __Buffer = __Context.Allocate(g, new Rectangle(0,0,Width,Heght));
+            __Buffer = __Context.Allocate(g, new Rectangle(0, 0, Width, Height));
 
-            var timer = new Timer { Interval = 1000 };
-            timer.Tick += OnTimewTick;
+            random = new Random();
+
+            var timer = new Timer { Interval = 100 };
+            timer.Tick += OnTimerTick;
             timer.Start();
+
+            __Timer = timer;
         }
 
-        private static void OnTimewTick(object sender, EventArgs e)
+        private static void OnTimerTick(object sender, EventArgs e)
         {
             Update();
             Draw();
         }
 
         private static VisualObject[] __GameObjects;
+        private static Star[] __Stars;
         public static void Load()
         {
+            __Stars = new Star[100];
+            for (var j = 0; j < __Stars.Length; j++)
+            {
+                __Stars[j] = new Star(
+                    new Point(Game.Width, j * random.Next(5, 50)),
+                    new Point(-1 * j * random.Next(1, 3), 0),
+                    10);
+            }
+
             __GameObjects = new VisualObject[30];
             for (var i = 0; i < __GameObjects.Length; i++)
             {
@@ -53,14 +65,14 @@ namespace AsteroidGame
             }
         }
 
-        public static void Draw() 
+        public static void Draw()
         {
             var g = __Buffer.Graphics;
             g.Clear(Color.Black);
 
-            /*g.DrawRectangle(Pens.White, new Rectangle(50, 50, 200, 200));
-            g.FillEllipse(Brushes.Red, new Rectangle(100,50,70,120));
-*/
+            foreach (var star in __Stars)
+                star.Draw(g);
+
             foreach (var visual_object in __GameObjects)
                 visual_object.Draw(g);
 
@@ -69,8 +81,12 @@ namespace AsteroidGame
 
         public static void Update()
         {
+            foreach (var star in __Stars)
+                star.Update();
+
             foreach (var visual_object in __GameObjects)
                 visual_object.Update();
+
         }
     }
 }
