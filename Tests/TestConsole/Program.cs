@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestConsole.Loggers;
 
 namespace TestConsole
 {
@@ -10,144 +12,131 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            /*Gamer gamer = new Gamer("Игрок 1", new DateTime(1990, 6, 16, 12, 5, 5));
+            /*TraceLogger trace_logger = null;
 
-            Gamer[] gamers = new Gamer[100];
-            for (var i = 0; i < gamers.Length; i++)
+            try
             {
-                var g = new Gamer($"Gamer {i + 1}", DateTime.Now.Subtract(TimeSpan.FromDays(365 * (i + 18))));
-                gamers[i] = g;
+                trace_logger = new TraceLogger();
+                trace_logger.Log("123");
+            }
+            finally
+            {
+                trace_logger.Dispose();
+            }*/
+
+            using (var trace_logger = new TraceLogger())
+            {
+                trace_logger.Log("123");
             }
 
-            gamer.SayYouName();
+            //Logger logger = new ListLogger();
+            //Logger logger = new FileLogger("program.log");
 
-            Console.WriteLine();
+            Logger logger = new TraceLogger();
 
-            foreach (var g in gamers)
-            { g.SayYouName(); }
+            Trace.Listeners.Add(new TextWriterTraceListener("trace.log"));
 
-            *//*gamer.SetName("Ffff");
+            var critical_logger = new ListLogger();
+            var student_logger = new Student { Name = "Иванов" };
+            var student_clone = (Student)student_logger.Clone();
 
-            Console.WriteLine($"Your name {gamer.GetName()}");*//*
+            ((ILogger)student_logger).LogError("Error!");
 
+            DoSomeCriticalWork(student_logger);
 
-            gamer.Name = "123";
+            logger.LogInformation("Start program");
 
+            for (var i = 0; i < 10; i++)
+                logger.LogInformation($"Do some work {i + 1}");
 
-            Console.WriteLine($"Your name {gamer.Name}");
-*/
+            logger.LogWarning("Завершение работы приложения");
 
-            /*var space_ship = new SpaceShip(new Vector2D(5,7));
-            var space_ship2 = space_ship;
-            space_ship.Position = new Vector2D(150, -210);
-            
-*/
-            var v1 = new Vector2D(1, 8);
-            Console.WriteLine(v1);
-            /*
-            v1.X = 7;
-            v1.Y = -14;
+            //var log_message = ((ListLogger)logger).Messages;
 
-            var v3 = v1 + v2;
-            var v4 = v2 - v1;
+            var random = new Random();
+            var students = new Student[100];
+            for (var i = 0; i < students.Length; i++)
+                students[i] = new Student { Name = $"Student {i + 1}", Height = random.Next(150, 211) };
 
-            var v5 = v4 + 7;
-            var v6 = -v5;
-*/
+            Array.Sort(students);
 
-            var printer = new Printer();
+            Trace.Flush();//сохраняем все из памяти
 
-            printer.Print("Print string");
-
-            printer = new PrefixPrinter(">>>>>>>");
-
-            printer.Print("Hello World!");
-
-            printer = new DateTimeLogPrinter();
-
-            printer.Print("test");
 
             Console.ReadLine();
 
         }
-    }
 
-    class Printer
-    {
-        public virtual void Print(string str)
-        { Console.WriteLine(str); }
-    }
-
-    class PrefixPrinter : Printer
-    {
-        private string _Prefix;
-
-        public PrefixPrinter(string Prefix) => _Prefix = Prefix;
-        //public PrefixPrinter(string Prefix) { _Prefix = Prefix; }
-        public override void Print(string str)
+        public static void DoSomeCriticalWork(ILogger log)
         {
-            //Console.WriteLine("{0}{1}", _Prefix, str);
-            base.Print($">>>>>>>>>>>{str}");
-        }
-
-    }
-
-    class DateTimeLogPrinter : Printer
-    {
-        public override void Print(string str)
-        {
-            Console.Write(DateTime.Now);
-            Console.Write(">>");
-            base.Print(str);
-        }
-    }
-
-    class FilePrinter : Printer
-    {
-
-        private string _FileName;
-        public FilePrinter(string FileName) => _FileName = FileName;
-        public override void Print(string str)
-        {
-            System.IO.File.AppendAllText(_FileName, str);
-        }
-    }
-
-    class Gamer
-    {
-        private string _Name;
-        private DateTime _DayOfBirth;
-        public Gamer() { }
-        public Gamer(string Name, DateTime DayOfBirth)
-        {
-            this._Name = Name;
-            this._DayOfBirth = DayOfBirth;
-        }
-
-        /*public void SetName(string value) {
-            _Name = value;
-        }
-
-        public string GetName() { return _Name; }
-*/
-        public string Name
-        {
-            get { return _Name ?? string.Empty; }
-            set
+            for (var i = 0; i < 10; i++)
             {
-                if (value == null)
-                    throw new ArgumentNullException(nameof(value));
-                _Name = value;
+                log.LogInformation($"Do some wery important work {i + 1}");
             }
         }
+    }
 
-        internal int GetNameLenght()
+    public class Student : ILogger, IComparable, ICloneable
+    {
+        private List<string> _Messages = new List<string>();
+        public double Height { get; set; } = 175;
+        public string Name { get; set; }
+        public List<int> Ratings { get; set; } = new List<int>();
+
+        public void Log(string Message)
         {
-            return Name.Length;
+            Ratings.Add(Message.Length);
+            _Messages.Add(Message);
         }
-        public void SayYouName()
+
+        //public void LogError(string Message) { Log($"Error: {Message}"); }
+
+        void ILogger.LogError(string Message) { Log($"Error: {Message}"); }
+        public void LogInformation(string Message)
         {
-            Console.WriteLine($"My name is {_Name} - {_DayOfBirth:dd:MM:yyyy HH:mm:ss}");
+            Log($"Info: {Message}");
+        }
+
+        public void LogWarning(string Message)
+        {
+            Log($"Warning: {Message}");
+        }
+
+        public int CompareTo(object obj)
+        {//если передаваемый объект является Типом студент то
+            if (obj is Student)
+            {
+                var other_student = (Student)obj;
+                //return StringComparer.OrdinalIgnoreCase.Compare(Name, other_student.Name);
+                if (Height > other_student.Height)
+                    return +1;
+                else if (Height.Equals(other_student.Height))
+                    return 0;
+                else
+                    return -1;
+            }
+
+            if (obj is null) throw new ArgumentNullException(nameof(obj), "Попытка сравнения студента с пустотой");
+            throw new ArgumentException($"Попытка сравнения студента с {obj.GetType().Name}", nameof(obj));
+        }
+
+        public override string ToString() => $"{Name} - {Height}";
+
+        public object Clone()
+        {
+            /*var new_student = new Student {
+                _Messages = new List<string>(_Messages),
+                Height = Height,
+                Name = Name,
+                Ratings = new List<int>(Ratings)};*/
+
+            var new_student = (Student)MemberwiseClone();
+            new_student._Messages = new List<string>(_Messages);
+            new_student.Ratings = new List<int>(Ratings);
+
+            return new_student;
         }
     }
+
+
 }

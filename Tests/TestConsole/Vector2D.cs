@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestConsole
 {
-    struct Vector2D
+    readonly struct Vector2D
     {
         /*        private double _X;
                 private double _Y;
@@ -14,8 +14,8 @@ namespace TestConsole
                 public double X { get { return _X; } set { _X = value; } }
                 public double Y { get => _Y; set => _Y = value; }
         */
-        public double X { get; set; }
-        public double Y { get; set; }
+        public double X { get;  }
+        public double Y { get;  }
 
         public double Lenght => Math.Sqrt(X * X + Y * Y);
 
