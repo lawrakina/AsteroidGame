@@ -17,18 +17,11 @@ namespace AsteroidGame
 
         public override void Draw(Graphics g)
         {
-            /*g.DrawLine(
-                Pens.Gray,
-                _Position.X, _Position.Y,
-                _Position.X + _Size.Width, _Position.Y + _Size.Height);
-            g.DrawLine(
-                Pens.Gray,
-                _Position.X+_Size.Width, _Position.Y,
-                _Position.X, _Position.Y+_Size.Height);*/
+            //Костыль, который показывает путь до картинки которая находится в проекте, а не в папке с исполняемым файлом
             string fileName = @"star.png";
             string pathToFile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "");
             var indexOfStr = pathToFile.IndexOf("bin\\Debug");
-            pathToFile = pathToFile.Substring(0, indexOfStr)+ "star.png";
+            pathToFile = pathToFile.Substring(0, indexOfStr)+ fileName;
 
             g.DrawImage(Image.FromFile(pathToFile),_Position);
         }
