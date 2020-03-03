@@ -51,7 +51,6 @@ namespace AsteroidGame
 
         private static VisualObject[] __GameObjects;
         private static Bullet __Bullet;
-        //private static Star[] __Stars;
         public static void Load()
         {
             var game_objects = new List<VisualObject>();
@@ -90,25 +89,6 @@ namespace AsteroidGame
                     random.Next(5, asteroid_max_size)));
             }
 
-            /*__Stars = new Star[100];
-            for (var j = 0; j < __Stars.Length; j++)
-            {
-                __Stars[j] = new Star(
-                    new Point(Game.Width, j * random.Next(5, 50)),
-                    new Point(-1 * j * random.Next(1, 3), 0),
-                    10,
-                    AsteroidGame.Properties.Resources.star);
-            }
-
-            __GameObjects = new VisualObject[30];
-            *//*for (var i = 0; i < __GameObjects.Length; i++)
-            {
-                __GameObjects[i] = new VisualObject(
-                    new Point(600, i * 20),
-                    new Point(15 - i, 20 - i),
-                    new Size(20, 20));
-            }*/
-
             __GameObjects = game_objects.ToArray();
 
             __Bullet = new Bullet(200);
@@ -118,9 +98,6 @@ namespace AsteroidGame
         {
             var g = __Buffer.Graphics;
             g.Clear(Color.Black);
-
-            /*foreach (var star in __Stars)
-                star.Draw(g);*/
 
             foreach (var visual_object in __GameObjects)
                 visual_object?.Draw(g);
