@@ -51,6 +51,7 @@ namespace AsteroidGame
 
         private static VisualObject[] __GameObjects;
         private static Bullet __Bullet;
+        private static SpaceShip __Ship;
         public static void Load()
         {
             var game_objects = new List<VisualObject>();
@@ -92,6 +93,7 @@ namespace AsteroidGame
             __GameObjects = game_objects.ToArray();
 
             __Bullet = new Bullet(200);
+            __Ship = new SpaceShip(new Point(10,400), new Point(5,5),new Size(10,10));
         }
 
         public static void Draw()
@@ -105,6 +107,8 @@ namespace AsteroidGame
             __Bullet.Draw(g);
 
             __Buffer.Render();
+
+            __Ship.Draw(g);
         }
 
         public static void Update()
