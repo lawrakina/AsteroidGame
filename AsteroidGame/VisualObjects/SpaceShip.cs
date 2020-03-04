@@ -54,7 +54,7 @@ namespace AsteroidGame.VisualObjects
             {
                 ChangeEnergy(-asteroid.Power);
             }
-            if (obj is Apteka apteka)
+            if (is_collision && obj is Apteka apteka)
             {
                 ChangeEnergy(apteka.Power);
             }

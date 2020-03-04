@@ -25,6 +25,8 @@ namespace AsteroidGame
         public static int Width { get; set; }
         public static int Height { get; set; }
 
+        public delegate void Logger(string str);
+        public static Logger __Logger;
         public static void Initialize(Form form)
         {
             Width = form.Width;
@@ -70,6 +72,8 @@ namespace AsteroidGame
         private static VisualObject[] __GameObjects;
         private static Bullet __Bullet;
         private static SpaceShip __Ship;
+        
+
         public static void Load()
         {
             var game_objects = new List<VisualObject>();
@@ -85,18 +89,6 @@ namespace AsteroidGame
                     star_size));
             }
 
-            //const int ellipses_count = 20;
-            //const int ellipses_size_x = 20;
-            //const int ellipses_size_y = 30;
-
-            //for (var i = 0; i < ellipses_count; i++)
-            //{
-            //    game_objects.Add(new EllipseObject(
-            //        new Point(600, i * 20),
-            //        new Point(15 - i, 20 - i),
-            //        new Size(ellipses_size_x, ellipses_size_y)));
-            //}
-
             const int asteroid_count = 10;
             const int asteroid_max_size = 50;
             const int asteroid_max_speed = 10;
@@ -108,10 +100,22 @@ namespace AsteroidGame
                     random.Next(5, asteroid_max_size)));
             }
 
+            const int apteka_count = 10;
+            for(var i = 0; i < apteka_count; i++)
+            {
+                game_objects.Add(new Apteka(
+                    new Point(random.Next(0, Width), random.Next(0, Height)),
+                    new Point(-1 * random.Next(1, asteroid_max_speed), 0),
+                    new Size(30,30)));
+            }
+
             __GameObjects = game_objects.ToArray();
             __Bullet = new Bullet(200);
             __Ship = new SpaceShip(new Point(10, 200), new Point(5, 5), new Size(10, 10));
             __Ship.ShipDestroyed += OnShipDestroyed;
+
+            __Logger += LoggerConsole;
+            __Logger += LoggerFile;
         }
 
         private static void OnShipDestroyed(object sender, EventArgs e)
@@ -165,13 +169,29 @@ namespace AsteroidGame
                     __Ship.CheckCollision(collision_object);
                     if (__Bullet != null && __Bullet.CheckCollision(collision_object))
                     {
-                        //__Bullet = new Bullet(new Random().Next(Width));
                         __Bullet = null;
                         __GameObjects[i] = null;
-                        MessageBox.Show("Астероид закончился");
+                        //MessageBox.Show("Астероид закончился");
+                        __Logger($"Астероид уничтожен");
                     }
+
+                    if (__Ship.CheckCollision(collision_object) && collision_object is Apteka apteka)
+                    {
+                        __GameObjects[i] = null;
+                    }
+
                 }
             }
+        }
+
+        
+        private static void LoggerConsole(string v)
+        {
+            Console.WriteLine($">>>>>>>> {v}");
+        }
+        private static void LoggerFile(string message)
+        {
+            System.IO.File.AppendAllText("console.txt", $"{message}\r\n");
         }
     }
 }
