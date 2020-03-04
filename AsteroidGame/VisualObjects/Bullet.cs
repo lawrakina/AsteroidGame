@@ -27,5 +27,19 @@ namespace AsteroidGame.VisualObjects
         {
             _Position = new Point(_Position.X + 3, _Position.Y);
         }
+
+        //public override bool CheckCollision(ICollision obj)
+        //{
+        //    var is_collision = Rect.IntersectsWith(obj.Rect);
+        //    if (is_collision && obj is Asteroid asteroid)
+        //    {
+        //        ChangeEnergy(-asteroid.Power);
+        //    }
+        //    if (is_collision && obj is Apteka apteka)
+        //    {
+        //        ChangeEnergy(apteka.Power);
+        //    }
+        //    return is_collision;
+        //}
     }
 }

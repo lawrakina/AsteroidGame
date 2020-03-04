@@ -14,7 +14,7 @@ namespace AsteroidGame.VisualObjects
         {
         }
 
-        public bool CheckCollision(ICollision obj)
+        public virtual bool CheckCollision(ICollision obj)
         {
             return Rect.IntersectsWith(obj.Rect);
         }

@@ -10,10 +10,11 @@ namespace AsteroidGame.VisualObjects
 {
     public class Asteroid : ImageObject, ICollision
     {
-        public Asteroid(Point Position, Point Direction, int Size) 
-            : base(Position, Direction, new Size(Size,Size), Properties.Resources.Asteroid)
+        public int Power { get; set; } = 3;
+        public Asteroid(Point Position, Point Direction, int Size)
+            : base(Position, Direction, new Size(Size, Size), Properties.Resources.Asteroid)
         {
-            
+
         }
 
         public bool CheckCollision(ICollision obj)

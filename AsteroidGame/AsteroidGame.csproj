@@ -49,6 +49,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VisualObjects\Apteka.cs" />
     <Compile Include="VisualObjects\Asteroid.cs" />
     <Compile Include="VisualObjects\Bullet.cs" />
     <Compile Include="VisualObjects\CollisionObject.cs" />
@@ -86,6 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Asteroid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\apt.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
