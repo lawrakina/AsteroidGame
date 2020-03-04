@@ -25,8 +25,10 @@ namespace AsteroidGame
         public static int Width { get; set; }
         public static int Height { get; set; }
 
-        public delegate void Logger(string str);
-        public static Logger __Logger;
+        private static int Score {get;set;} = 0;
+
+        private delegate void Logger(string str);
+        private static Logger __Logger;
         public static void Initialize(Form form)
         {
             Width = form.Width;
@@ -144,7 +146,7 @@ namespace AsteroidGame
             __Ship.Draw(g);
 
             g.DrawString(
-                $"Energy: {__Ship.Energy}",
+                $"Energy: {__Ship.Energy}, Score: {Score}",
                 new Font(FontFamily.GenericSerif, 14, FontStyle.Italic),
                 Brushes.White,
                 10,
@@ -171,7 +173,7 @@ namespace AsteroidGame
                     {
                         __Bullet = null;
                         __GameObjects[i] = null;
-                        //MessageBox.Show("Астероид закончился");
+                        Score++;
                         __Logger($"Астероид уничтожен");
                     }
 

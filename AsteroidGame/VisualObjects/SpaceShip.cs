@@ -32,7 +32,6 @@ namespace AsteroidGame.VisualObjects
             _Energy += delta;
             if (_Energy < 0)
                 ShipDestroyed?.Invoke(this, EventArgs.Empty);
-
         }
 
         public void MoveUp()
