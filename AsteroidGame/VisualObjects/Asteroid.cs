@@ -26,5 +26,18 @@ namespace AsteroidGame.VisualObjects
         {
             base.Update();
         }
+
+        public static List<Asteroid> NewAsteroidCollection(Random random, int Width, int Height, int asteroid_max_speed, int asteroid_count, int asteroid_max_size)
+        {
+            var result = new List<Asteroid>();
+            for (var i = 0; i < asteroid_count; i++)
+            {
+                result.Add(new Asteroid(
+                                    new Point(random.Next(0, Width), random.Next(0, Height)),
+                                    new Point(-1 * random.Next(1, asteroid_max_speed), 0),
+                                    random.Next(5, asteroid_max_size)));
+            }
+            return result;
+        }
     }
 }
