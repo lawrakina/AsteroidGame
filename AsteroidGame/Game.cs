@@ -25,7 +25,10 @@ namespace AsteroidGame
         public static int Width { get; set; }
         public static int Height { get; set; }
 
-        private static int Score {get;set;} = 0;
+        const int asteroid_count = 10;
+        const int asteroid_max_size = 50;
+        const int asteroid_max_speed = 10;
+        private static int Score { get; set; } = 0;
 
         private delegate void Logger(string str);
         private static Logger __Logger;
@@ -54,7 +57,8 @@ namespace AsteroidGame
             switch (e.KeyCode)
             {
                 case Keys.ControlKey:
-                    __Bullet = new Bullet(__Ship.Position.Y);
+                    //__Bullet = new Bullet(__Ship.Position.Y);
+                    __Bullets.Add(new Bullet(__Ship.Position.Y));
                     break;
                 case Keys.Up:
                     __Ship.MoveUp();
@@ -72,14 +76,18 @@ namespace AsteroidGame
         }
 
         private static VisualObject[] __GameObjects;
-        private static Bullet __Bullet;
+        //private static Bullet __Bullet;
         private static SpaceShip __Ship;
-        
+        private static List<Bullet> __Bullets = new List<Bullet>();
+        private static List<Asteroid> __Asteroids = new List<Asteroid>();
+        private static List<Apteka> __Aptekas = new List<Apteka>();
+
 
         public static void Load()
         {
             var game_objects = new List<VisualObject>();
 
+            //рисуем задний фон
             const int start_count = 150;
             const int star_size = 20;
             const int star_max_speed = 20;
@@ -91,28 +99,25 @@ namespace AsteroidGame
                     star_size));
             }
 
-            const int asteroid_count = 10;
-            const int asteroid_max_size = 50;
-            const int asteroid_max_speed = 10;
-            for (var i = 0; i < asteroid_count; i++)
-            {
-                game_objects.Add(new Asteroid(
-                    new Point(random.Next(0, Width), random.Next(0, Height)),
-                    new Point(-1 * random.Next(1, asteroid_max_speed), 0),
-                    random.Next(5, asteroid_max_size)));
-            }
-
+            //добавляем астероиды
+            __Asteroids = Asteroid.NewAsteroidCollection(
+                new Random(), 
+                Game.Width, Game.Height, 
+                asteroid_max_speed, 
+                asteroid_count, 
+                asteroid_max_size);
+            
             const int apteka_count = 10;
-            for(var i = 0; i < apteka_count; i++)
+            for (var i = 0; i < apteka_count; i++)
             {
-                game_objects.Add(new Apteka(
+                __Aptekas.Add(new Apteka(
                     new Point(random.Next(0, Width), random.Next(0, Height)),
                     new Point(-1 * random.Next(1, asteroid_max_speed), 0),
-                    new Size(30,30)));
+                    new Size(30, 30)));
             }
-
+            
             __GameObjects = game_objects.ToArray();
-            __Bullet = new Bullet(200);
+            
             __Ship = new SpaceShip(new Point(10, 200), new Point(5, 5), new Size(10, 10));
             __Ship.ShipDestroyed += OnShipDestroyed;
 
@@ -142,7 +147,14 @@ namespace AsteroidGame
             foreach (var visual_object in __GameObjects)
                 visual_object?.Draw(g);
 
-            __Bullet?.Draw(g);
+            //__Bullet?.Draw(g);
+            foreach (var bullet in __Bullets) bullet?.Draw(g);
+            //рисуем астероиды
+            foreach (var asteroid in __Asteroids) asteroid?.Draw(g);
+            //рисуем аптечки
+            foreach (var apteka in __Aptekas) apteka?.Draw(g);
+
+
             __Ship.Draw(g);
 
             g.DrawString(
@@ -157,36 +169,73 @@ namespace AsteroidGame
 
         public static void Update()
         {
+            //рисуем звезды
             foreach (var visual_object in __GameObjects)
                 visual_object?.Update();
 
-            __Bullet?.Update();
+            //массивы на удаление
+            var asteroid_to_remove = new List<Asteroid>();
+            var bullets_to_remove = new List<Bullet>();
+            var aptekas_to_remove = new List<Apteka>();
 
-            for (var i = 0; i < __GameObjects.Length; i++)
+            //рисуем и обрабатываем столкновения с пулями
+            foreach (var bullet in __Bullets)
             {
-                var obj = __GameObjects[i];
-                if (obj is ICollision)
+                bullet?.Update();
+
+                if (bullet.Position.X > Game.Width)
+                    bullets_to_remove.Add(bullet);
+            }
+
+            //если поизошло столкновение астероида с кораблем - удаляем астероид
+            for (var i = 0; i < __Asteroids.Count; i++)
+            {
+                __Asteroids[i].Update();
+                //проверка столкновения с астероидом
+                __Ship.CheckCollision(__Asteroids[i]);
+                if (__Asteroids[i].CheckCollision(__Ship))
                 {
-                    var collision_object = (ICollision)obj;
-                    __Ship.CheckCollision(collision_object);
-                    if (__Bullet != null && __Bullet.CheckCollision(collision_object))
+                    asteroid_to_remove.Add(__Asteroids[i]);
+                    Score++;
+                    __Logger($"Астероид уничтожен");
+                }
+
+                foreach (var bullet in __Bullets.ToArray())
+                {
+                    if (bullet.CheckCollision(__Asteroids[i]))
                     {
-                        __Bullet = null;
-                        __GameObjects[i] = null;
+                        bullets_to_remove.Add(bullet);
+                        asteroid_to_remove.Add(__Asteroids[i]);
                         Score++;
                         __Logger($"Астероид уничтожен");
                     }
-
-                    if (__Ship.CheckCollision(collision_object) && collision_object is Apteka apteka)
-                    {
-                        __GameObjects[i] = null;
-                    }
-
                 }
+            }
+
+            //обработка столкновения с аптечкой
+            foreach (var apteka in __Aptekas)
+            {
+                apteka.Update();
+                if (__Ship.CheckCollision(apteka))
+                    aptekas_to_remove.Add(apteka);
+            }
+
+            //удаление ненужных объектов
+            foreach (var asteriod in asteroid_to_remove)
+            {
+                __Asteroids.Remove(asteriod);
+            }
+            //если астероиды закончились до добавляем еще, на один больше
+            if (__Asteroids.Count == 0)
+                __Asteroids = Asteroid.NewAsteroidCollection(new Random(), Game.Width, Game.Height, asteroid_max_speed, asteroid_count + 1, asteroid_max_size);
+
+            foreach (var bullet in bullets_to_remove)
+            {
+                __Bullets.Remove(bullet);
             }
         }
 
-        
+
         private static void LoggerConsole(string v)
         {
             Console.WriteLine($">>>>>>>> {v}");
