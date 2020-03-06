@@ -63,7 +63,7 @@ namespace TestConsole
 
             //Trace.Flush();//сохраняем все из памяти
 
-
+            //заполняем
             var list = new List<string>();
             var rnd = new Random();
             for (var i = 0; i < 100; i++)
@@ -71,6 +71,8 @@ namespace TestConsole
                 list.Add($"случайное число {rnd.Next(1, 5)}");
             }
 
+
+            //выводим через словарь
             var result_dict = new Dictionary<string, int>();
             foreach (var item in list)
             {
@@ -79,12 +81,13 @@ namespace TestConsole
                 else
                     result_dict[item]++;
             }
-
-            foreach(var point in result_dict)
+            foreach (var point in result_dict)
                 Console.WriteLine($"строка: {point.Key}, встречается {point.Value} раз");
 
-            var result = result_dict.Select(s => s.Key);
-            Console.WriteLine($"Используя Linq получилось следующее {result}");
+            //выводим через linq
+            var result = result_dict.Select(r => new { Value = r.Value, Key = r.Key });
+            foreach (var item in result)
+                Console.WriteLine($"{item.Key as string}, {item.Value}");
 
             Console.ReadLine();
 
