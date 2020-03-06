@@ -12,56 +12,79 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
-            /*TraceLogger trace_logger = null;
 
-            try
+            ///*TraceLogger trace_logger = null;
+
+            //try
+            //{
+            //    trace_logger = new TraceLogger();
+            //    trace_logger.Log("123");
+            //}
+            //finally
+            //{
+            //    trace_logger.Dispose();
+            //}*/
+
+            //using (var trace_logger = new TraceLogger())
+            //{
+            //    trace_logger.Log("123");
+            //}
+
+            ////Logger logger = new ListLogger();
+            ////Logger logger = new FileLogger("program.log");
+
+            //Logger logger = new TraceLogger();
+
+            //Trace.Listeners.Add(new TextWriterTraceListener("trace.log"));
+
+            //var critical_logger = new ListLogger();
+            //var student_logger = new Student { Name = "Иванов" };
+            //var student_clone = (Student)student_logger.Clone();
+
+            //((ILogger)student_logger).LogError("Error!");
+
+            //DoSomeCriticalWork(student_logger);
+
+            //logger.LogInformation("Start program");
+
+            //for (var i = 0; i < 10; i++)
+            //    logger.LogInformation($"Do some work {i + 1}");
+
+            //logger.LogWarning("Завершение работы приложения");
+
+            ////var log_message = ((ListLogger)logger).Messages;
+
+            //var random = new Random();
+            //var students = new Student[100];
+            //for (var i = 0; i < students.Length; i++)
+            //    students[i] = new Student { Name = $"Student {i + 1}", Height = random.Next(150, 211) };
+
+            //Array.Sort(students);
+
+            //Trace.Flush();//сохраняем все из памяти
+
+
+            var list = new List<string>();
+            var rnd = new Random();
+            for (var i = 0; i < 100; i++)
             {
-                trace_logger = new TraceLogger();
-                trace_logger.Log("123");
+                list.Add($"случайное число {rnd.Next(1, 5)}");
             }
-            finally
-            {
-                trace_logger.Dispose();
-            }*/
 
-            using (var trace_logger = new TraceLogger())
+            var result_dict = new Dictionary<string, int>();
+            foreach (var item in list)
             {
-                trace_logger.Log("123");
+                if (!result_dict.ContainsKey(item))
+                    result_dict.Add(item, 1);
+                else
+                    result_dict[item]++;
             }
 
-            //Logger logger = new ListLogger();
-            //Logger logger = new FileLogger("program.log");
+            foreach(var point in result_dict)
+                Console.WriteLine($"строка: {point.Key}, встречается {point.Value} раз");
 
-            Logger logger = new TraceLogger();
-
-            Trace.Listeners.Add(new TextWriterTraceListener("trace.log"));
-
-            var critical_logger = new ListLogger();
-            var student_logger = new Student { Name = "Иванов" };
-            var student_clone = (Student)student_logger.Clone();
-
-            ((ILogger)student_logger).LogError("Error!");
-
-            DoSomeCriticalWork(student_logger);
-
-            logger.LogInformation("Start program");
-
-            for (var i = 0; i < 10; i++)
-                logger.LogInformation($"Do some work {i + 1}");
-
-            logger.LogWarning("Завершение работы приложения");
-
-            //var log_message = ((ListLogger)logger).Messages;
-
-            var random = new Random();
-            var students = new Student[100];
-            for (var i = 0; i < students.Length; i++)
-                students[i] = new Student { Name = $"Student {i + 1}", Height = random.Next(150, 211) };
-
-            Array.Sort(students);
-
-            Trace.Flush();//сохраняем все из памяти
-
+            var result = result_dict.Select(s => s.Key);
+            Console.WriteLine($"Используя Linq получилось следующее {result}");
 
             Console.ReadLine();
 
