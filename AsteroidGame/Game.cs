@@ -52,25 +52,47 @@ namespace AsteroidGame
             form.KeyDown += OnFormKeyDown;
         }
 
+
+        private static int __CtrlKeyPressed;
+        private static int __UpKeyPressed;
+        private static int __DownKeyPressed;
         private static void OnFormKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
                 case Keys.ControlKey:
                     //__Bullet = new Bullet(__Ship.Position.Y);
-                    __Bullets.Add(new Bullet(__Ship.Position.Y));
+                    //__Bullets.Add(new Bullet(__Ship.Position.Y));
+                    __CtrlKeyPressed++;
                     break;
                 case Keys.Up:
-                    __Ship.MoveUp();
+                    //__Ship.MoveUp();
+                    __UpKeyPressed++;
                     break;
                 case Keys.Down:
-                    __Ship.MoveDown();
+                    //__Ship.MoveDown();
+                    __DownKeyPressed++;
                     break;
             }
         }
 
         private static void OnTimerTick(object sender, EventArgs e)
         {
+            while(__CtrlKeyPressed > 0)
+            {
+                __Bullets.Add(new Bullet(__Ship.Position.Y));
+                __CtrlKeyPressed--;
+            }
+            while (__UpKeyPressed > 0)
+            {
+                __Ship.MoveUp();
+                __UpKeyPressed--;
+            }
+            while (__DownKeyPressed > 0)
+            {
+                __Ship.MoveDown();
+                __DownKeyPressed--;
+            }
             Update();
             Draw();
         }
