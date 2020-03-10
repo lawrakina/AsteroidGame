@@ -31,7 +31,8 @@
         <TextBox x:Name="textBoxEmployeeAge" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="90,38,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBlock x:Name="textBlock3" Grid.Column="1" HorizontalAlignment="Left" Margin="10,70,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Департамент" VerticalAlignment="Top"/>
         <ComboBox x:Name="comboBoxSelectDepartament" Grid.Column="1" HorizontalAlignment="Left" Margin="90,66,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" SelectionChanged="comboBoxSelectDepartament_SelectionChanged"/>
-        <Button x:Name="button1" Content="Сохранить" Grid.Column="1" HorizontalAlignment="Left" Margin="245,68,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="buttonEmployeeSave_Click"/>
+        <Button x:Name="buttonSaveEmployee" Content="Сохранить" Grid.Column="1" HorizontalAlignment="Left" Margin="245,68,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="buttonEmployeeSave_Click"/>
+        <Button x:Name="buttonNewEmployee" Content="Новый" Grid.Column="1" HorizontalAlignment="Left" Margin="245,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="buttonNewEmployee_Click"/>
 
     </Grid>
 </Window>

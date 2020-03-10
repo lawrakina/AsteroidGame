@@ -157,5 +157,33 @@ namespace TestWPFApp
             ComboBox comboBox = (ComboBox)sender;
             selectedDepartameent = (Departament)comboBox.SelectedItem;
         }
+
+        ChildWindow childWindow = new ChildWindow();
+        private void buttonNewEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            childWindow = new ChildWindow();
+            childWindow.Owner = this;
+            childWindow.comboBoxDepartaments.ItemsSource = Departaments;
+            childWindow.employee = new Employee();
+            childWindow.departament = new Departament();
+            childWindow.Show();
+
+            childWindow.Closed += ChildWindow_Closed;
+        }
+
+        private void ChildWindow_Closed(object sender, EventArgs e)
+        {
+            //добавляем работника в выбранный департамент при закрытии формы
+            foreach (var d in Departaments)
+            {
+                if (d == childWindow.departament)
+                    d.Employees.Add(new Employee
+                    {
+                        Id = d.Employees.Count + 1,
+                        Age = childWindow.employee.Age,
+                        Name = childWindow.employee.Name
+                    });
+            }
+        }
     }
 }
