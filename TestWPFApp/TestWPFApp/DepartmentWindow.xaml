@@ -1,0 +1,38 @@
+﻿<Window x:Class="TestWPFApp.DepartmentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestWPFApp"
+        mc:Ignorable="d"
+        Title="DepartmentWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="30*" MinHeight="150"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="50*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0">Департаменты</TextBlock>
+        <ListBox Grid.Row="0" Grid.Column="0" x:Name="listBoxDepartament" Margin="10,20,10,10" SelectionChanged="ChangedDepartament">
+        </ListBox>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="textBoxDepartament">Работники</TextBlock>
+        <ListBox Grid.Row="0" Grid.Column="1" x:Name="listBoxEmlployee" Margin="10,20,10,10" SelectionChanged="listBoxEmlployee_SelectionChanged" >
+        </ListBox>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Департамент:" VerticalAlignment="Top" Width="77"/>
+        <TextBox x:Name="textBoxDepartamentName" Height="22" Margin="90,10,90,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Button x:Name="button" Content="Сохранить" HorizontalAlignment="Right" Margin="0,10,10,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="22" Click="buttonDepartamentName_Click"/>
+        <TextBlock x:Name="textBlock1" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top"><Run Text="Имя"/><LineBreak/><Run/></TextBlock>
+        <TextBox x:Name="textBoxEmployeeName" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="90,9,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBlock x:Name="textBlock2" Grid.Column="1" HorizontalAlignment="Left" Margin="10,39,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="42"><Run Text="Ле"/><Run Text="т"/></TextBlock>
+        <TextBox x:Name="textBoxEmployeeAge" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="90,38,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBlock x:Name="textBlock3" Grid.Column="1" HorizontalAlignment="Left" Margin="10,70,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Департамент" VerticalAlignment="Top"/>
+        <ComboBox x:Name="comboBoxSelectDepartament" Grid.Column="1" HorizontalAlignment="Left" Margin="90,66,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" SelectionChanged="comboBoxSelectDepartament_SelectionChanged"/>
+        <Button x:Name="buttonSaveEmployee" Content="Сохранить" Grid.Column="1" HorizontalAlignment="Left" Margin="245,68,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="buttonEmployeeSave_Click"/>
+        <Button x:Name="buttonNewEmployee" Content="Новый" Grid.Column="1" HorizontalAlignment="Left" Margin="245,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="buttonNewEmployee_Click"/>
+
+    </Grid>
+</Window>
