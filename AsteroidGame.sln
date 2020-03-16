@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workers", "Workers\Workers.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWPFApp", "TestWPFApp\TestWPFApp\TestWPFApp.csproj", "{5A9FA63B-A334-4902-8CBA-82108592AB40}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BindingTests", "BindingTests", "{C8A2C5A4-7A37-4D2B-97BA-28CA9D2C0BBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BindingTest", "BindingTest\BindingTest\BindingTest.csproj", "{792CA3A2-848B-478E-970F-B434B3DA1724}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,10 @@ Global
 		{5A9FA63B-A334-4902-8CBA-82108592AB40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A9FA63B-A334-4902-8CBA-82108592AB40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A9FA63B-A334-4902-8CBA-82108592AB40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{792CA3A2-848B-478E-970F-B434B3DA1724}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{792CA3A2-848B-478E-970F-B434B3DA1724}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{792CA3A2-848B-478E-970F-B434B3DA1724}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{792CA3A2-848B-478E-970F-B434B3DA1724}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +51,7 @@ Global
 		{EAFD6F82-800A-414C-92CC-D311BE22EB2C} = {3E8C7A1E-7837-460B-BBEA-80E76ED17767}
 		{979A3B61-CC5E-47B4-9423-856BC20209CC} = {3E8C7A1E-7837-460B-BBEA-80E76ED17767}
 		{5A9FA63B-A334-4902-8CBA-82108592AB40} = {3E8C7A1E-7837-460B-BBEA-80E76ED17767}
+		{792CA3A2-848B-478E-970F-B434B3DA1724} = {C8A2C5A4-7A37-4D2B-97BA-28CA9D2C0BBD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F53746F-EDD7-4B65-9FFE-3FA603972B41}
