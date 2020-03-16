@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BindingTest"
         mc:Ignorable="d"
-        Title="MainWindow2" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow2" Height="450" Width="800"
+        xmlns:c="clr-namespace:BindingTest.Converters"
+        >
+    <Window.Resources>
+        <c:MultiplyTo2 x:Key="MultiplyTo2"></c:MultiplyTo2>
+    </Window.Resources>
+    <Grid Margin="5">
         <Ellipse Fill="Blue" Stroke="Red" StrokeThickness="5" 
                  VerticalAlignment="Top" HorizontalAlignment="Left"
                  Width="80" Height="30" Margin="206,126,0,0"
@@ -31,8 +36,72 @@
         <TextBlock Name="HorisontalValue" 
                    Text="X"
                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,30,30,30"></TextBlock>
+
+        <TextBox Text="{Binding Value, ElementName=HorisontalSlider, Converter={StaticResource MultiplyTo2}}"
+                   HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,60,30,30" Width="60">
+            <TextBox.Visibility>
+                <Binding ElementName="VisibilityX" Path="IsChecked">
+                    <Binding.Converter>
+                        <c:BoolToVisibility></c:BoolToVisibility>
+                    </Binding.Converter>
+                </Binding>
+            </TextBox.Visibility>
+        </TextBox>
+
+        <CheckBox HorizontalAlignment="Right" VerticalAlignment="Top" Content="Visibility of X" Margin="0,80,30,0"
+                  Name="VisibilityX" IsChecked="True"/>
+
+        <TextBox
+                   Text="{Binding Value, ElementName=VerticalSlider}" Width="60"
+                   HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,30,40">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Background" Value="Yellow"></Setter>
+                    <Style.Triggers>
+                        <!-- <Trigger SourceName="VisibilityY" Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </Trigger> -->
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=VisibilityY}" Value="False">
+                            <!--<Setter Property="Visibility" Value="Hidden"/>-->
+                            <Setter Property="Background" Value="DarkBlue"/>
+                            <Setter Property="Foreground" Value="Red"/>
+                            <Setter Property="BorderThickness" Value="4"/>
+                            <Setter Property="BorderBrush" Value="Red"/>
+                        </DataTrigger>
+
+                        <Trigger Property="IsMouseOver" Value="true" >
+                            <!--<Setter Property="Background" Value="Red"/>-->
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation To="Red" Duration="0:0:0.5"  IsAdditive="True"
+                                                        AutoReverse="True"
+                                                        Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation From="Red" Duration="0:0:1"  IsAdditive="True"
+                                                        AutoReverse="True"
+                                                        Storyboard.TargetProperty="Background.(SolidColorBrush.Color)"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
         <TextBlock Name="VerticalValue"
                    Text="Y"
-                   HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,30,30"></TextBlock>
+                   HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,0,20"></TextBlock>
+        
+        <CheckBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="Visibility of Y" Margin="30,0,0,0"
+                  Name="VisibilityY" IsChecked="True"/>
+
+        
     </Grid>
 </Window>
