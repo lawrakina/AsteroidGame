@@ -148,7 +148,8 @@
                           ItemsSource="{x:Static data:TestData.Departamens}"
                           Name="ComboBoxDepartament"
                           />
-                    <Button Content="Изменить департамент"></Button>
+                    <Button Content="Изменить департамент"
+                            Command="{Binding TestCommand}"></Button>
                 </StackPanel>
             </Grid>
         </GroupBox>
