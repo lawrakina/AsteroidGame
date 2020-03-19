@@ -7,12 +7,67 @@
         mc:Ignorable="d"
         xmlns:vm="clr-namespace:DepartamentManager.ViewModels"
         xmlns:m="clr-namespace:DepartamentManager.Models"
-        xmlns:data="clr-namespace:DepartamentManager.Data"
+        
         Title="{Binding Title}" Height="600" Width="800">
+    <!--:data="clr-namespace:DepartamentManager.Data"-->
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
+
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Сотрудники" Grid.Column="0" Grid.Row="0" >
+            <ListView ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="vm:EmployeeViewModel">
+                        <TextBlock>
+                        <TextBlock Text="{Binding Name}"/>, <TextBlock Text="{Binding SurName}"/>
+                    </TextBlock>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </GroupBox>
+        <GroupBox Header="Инфа сотрудника" Grid.Column="1" Grid.Row="0">
+            <Grid DataContext="{Binding SelectedEmployee}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Имя:"/>
+                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Фамилия:"/>
+                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SurName}"/>
+            
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Отчество:"/>
+                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Patronymic}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="Дата рождения:"/>
+                <Calendar Grid.Column="1" Grid.Row="3" 
+                          SelectedDate="{Binding DayOfBirth}"
+                          DisplayDate="{Binding DayOfBirth}" 
+                          HorizontalAlignment="Left"/>
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="Возраст:"/>
+                <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Age}"/>
+            </Grid>
+        </GroupBox>
+    </Grid>
+    
+    <!-- <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="5*"/>
@@ -22,7 +77,9 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <GroupBox Grid.Column="0" Grid.Row="0" Header="Департамменты">
-            <ListView Name="DepartamensList" ItemsSource="{x:Static data:TestData.Departamens}">
+            <ListView Name="DepartamensList" 
+                      ItemsSource="{x:Static data:TestData.Departamens}"
+                      SelectedItem="{Binding SelectedDepartament}">
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="m:Departament">
                         <Border BorderThickness="1" BorderBrush="Black" Padding="3">
@@ -37,7 +94,7 @@
             </ListView>
         </GroupBox>
         <GroupBox Grid.Row="1" Grid.Column="0" Header="Инфа департамента"
-            DataContext="{Binding SelectedItem, ElementName=DepartamensList}"
+                  DataContext="{Binding SelectedItem, ElementName=DepartamensList}"
                   d:DataContext="{d:DesignInstance {x:Type m:Departamen}}">
             <Grid>
                 <Grid.Resources>
@@ -132,7 +189,7 @@
                 <TextBlock Grid.Column="0" Grid.Row="3" Text="отчество:"/>
                 <TextBlock Grid.Column="0" Grid.Row="4" Text="дата рождения:"/>
                 <TextBlock Grid.Column="0" Grid.Row="5" Text="возраст:"/>
-                
+
 
                 <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Id}"/>
                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SurName}"/>
@@ -140,7 +197,7 @@
                 <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Patronymic}"/>
                 <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding DayOfBirth}"/>
                 <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding Age}"/>
-                
+
                 <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
                             Orientation="Horizontal">
                     <TextBlock Text="Изменить департамент на:"/>
@@ -153,5 +210,5 @@
                 </StackPanel>
             </Grid>
         </GroupBox>
-    </Grid>
+    </Grid> -->
 </Window>
