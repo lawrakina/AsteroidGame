@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BindingTest", "BindingTest\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeesManager", "EmployeesManager\EmployeesManager.csproj", "{17DD8E14-0359-4788-946D-CFECCEF0017B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMTestApp", "MVVMTesting\MVVMTestApp\MVVMTestApp.csproj", "{B641393D-A2CC-40FE-BF74-9083D1D417BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{17DD8E14-0359-4788-946D-CFECCEF0017B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17DD8E14-0359-4788-946D-CFECCEF0017B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17DD8E14-0359-4788-946D-CFECCEF0017B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B641393D-A2CC-40FE-BF74-9083D1D417BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B641393D-A2CC-40FE-BF74-9083D1D417BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B641393D-A2CC-40FE-BF74-9083D1D417BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B641393D-A2CC-40FE-BF74-9083D1D417BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +65,7 @@ Global
 		{5A9FA63B-A334-4902-8CBA-82108592AB40} = {3E8C7A1E-7837-460B-BBEA-80E76ED17767}
 		{792CA3A2-848B-478E-970F-B434B3DA1724} = {C8A2C5A4-7A37-4D2B-97BA-28CA9D2C0BBD}
 		{17DD8E14-0359-4788-946D-CFECCEF0017B} = {C8A2C5A4-7A37-4D2B-97BA-28CA9D2C0BBD}
+		{B641393D-A2CC-40FE-BF74-9083D1D417BF} = {C8A2C5A4-7A37-4D2B-97BA-28CA9D2C0BBD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F53746F-EDD7-4B65-9FFE-3FA603972B41}
