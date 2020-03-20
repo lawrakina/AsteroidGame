@@ -24,15 +24,23 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <GroupBox Header="Сотрудники" Grid.Column="0" Grid.Row="0" >
-            <ListView ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
-                <ListView.ItemTemplate>
-                    <DataTemplate DataType="vm:EmployeeViewModel">
-                        <TextBlock>
-                        <TextBlock Text="{Binding Name}"/>, <TextBlock Text="{Binding SurName}"/>
+            <DockPanel>
+                <UniformGrid DockPanel.Dock="Bottom" Rows="1">
+                    <Button Content="Добавить" Command="{Binding CreateNewEmployeeCommand}"/>
+                    <Button Content="Удалить" 
+                            Command="{Binding RemoveEmployeeCommand}" 
+                            CommandParameter="{Binding SelectedEmployee}"/>
+                </UniformGrid>
+                <ListView ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="vm:EmployeeViewModel">
+                            <TextBlock>
+                        <TextBlock Text="{Binding Name}"/>, <TextBlock Text="{Binding SurName}"/> (<TextBlock Text="{Binding Departament.Name}"/>)
                     </TextBlock>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </DockPanel>
         </GroupBox>
         <GroupBox Header="Инфа сотрудника" Grid.Column="1" Grid.Row="0">
             <Grid DataContext="{Binding SelectedEmployee}">
@@ -46,13 +54,14 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="Имя:"/>
                 <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name}"/>
 
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Фамилия:"/>
                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SurName}"/>
-            
+
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="Отчество:"/>
                 <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Patronymic}"/>
 
@@ -63,10 +72,21 @@
                           HorizontalAlignment="Left"/>
                 <TextBlock Grid.Column="0" Grid.Row="4" Text="Возраст:"/>
                 <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding Age}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="5" Text="Отдел:"/>
+                <ComboBox  Grid.Column="1" Grid.Row="5" 
+                           ItemsSource="{Binding DataContext.Departamens, RelativeSource={RelativeSource AncestorType=GroupBox}}"
+                           SelectedItem="{Binding Departament}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </Grid>
         </GroupBox>
     </Grid>
-    
+
     <!-- <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>

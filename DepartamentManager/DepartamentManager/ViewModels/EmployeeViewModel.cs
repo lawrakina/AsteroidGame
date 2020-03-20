@@ -44,5 +44,12 @@ namespace DepartamentManager.ViewModels
         }
         public int Age => (int)Math.Floor((DateTime.Now - DayOfBirth).TotalDays / 365);
 
+
+        private DepartamentViewModel _Departament;
+        public DepartamentViewModel Departament
+        {
+            get => _Departament;
+            set => Set(ref _Departament, value);
+        }
     }
 }
