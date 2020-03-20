@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMTestApp", "MVVMTesting\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DepartamentManager", "DepartamentManager\DepartamentManager\DepartamentManager.csproj", "{9938DF62-1DFD-4205-9B1C-375CE86E7A2F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataBaseTests", "DataBaseTests", "{F69DF927-5D6A-4B7E-8165-16E233E1F231}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADONETTestingApp", "DataBaseTests\ADONETTestingApp\ADONETTestingApp.csproj", "{1D3842FB-41CF-43E8-B19C-1DF1834C999C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +65,10 @@ Global
 		{9938DF62-1DFD-4205-9B1C-375CE86E7A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9938DF62-1DFD-4205-9B1C-375CE86E7A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9938DF62-1DFD-4205-9B1C-375CE86E7A2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D3842FB-41CF-43E8-B19C-1DF1834C999C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D3842FB-41CF-43E8-B19C-1DF1834C999C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D3842FB-41CF-43E8-B19C-1DF1834C999C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D3842FB-41CF-43E8-B19C-1DF1834C999C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +81,7 @@ Global
 		{17DD8E14-0359-4788-946D-CFECCEF0017B} = {C8A2C5A4-7A37-4D2B-97BA-28CA9D2C0BBD}
 		{B641393D-A2CC-40FE-BF74-9083D1D417BF} = {C8A2C5A4-7A37-4D2B-97BA-28CA9D2C0BBD}
 		{9938DF62-1DFD-4205-9B1C-375CE86E7A2F} = {C8A2C5A4-7A37-4D2B-97BA-28CA9D2C0BBD}
+		{1D3842FB-41CF-43E8-B19C-1DF1834C999C} = {F69DF927-5D6A-4B7E-8165-16E233E1F231}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F53746F-EDD7-4B65-9FFE-3FA603972B41}
