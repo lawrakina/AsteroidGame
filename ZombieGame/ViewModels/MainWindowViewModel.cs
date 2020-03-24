@@ -25,11 +25,11 @@ namespace ZombieGame.ViewModels
             set => Set(ref _UserVM, value);
         }
 
-        private ObservableCollection<ZombieViewModel> _ZombieVM = new ObservableCollection<ZombieViewModel>();
-        public ObservableCollection<ZombieViewModel> ZombieVM
+        private ObservableCollection<ZombieViewModel> _ZombieListVM = new ObservableCollection<ZombieViewModel>();
+        public ObservableCollection<ZombieViewModel> ZombieListVM
         {
-            get => _ZombieVM;
-            set => Set(ref _ZombieVM, value);
+            get => _ZombieListVM;
+            set => Set(ref _ZombieListVM, value);
         }
 
         public MainWindowViewModel()
@@ -45,8 +45,9 @@ namespace ZombieGame.ViewModels
                     Position = BaseGameObjectViewModel.GetRandomPosition(Width, Height),
                     Direction = BaseGameObjectViewModel.GetRandomDirection()
                 }))
-                _ZombieVM.Add(zombie);
-
+            {
+                _ZombieListVM.Add( zombie );
+            }
             /////////
             /////////
             ///   1.СДЕЛАТЬ ВЫВОД СПИСКА ЗОМБИ НА ИГРОВОЕ ПОЛЕ
