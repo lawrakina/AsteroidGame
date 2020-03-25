@@ -1,0 +1,166 @@
+﻿<Window x:Class="ZombieGame.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZombieGame"
+        mc:Ignorable="d"
+        xmlns:vm="clr-namespace:ZombieGame.ViewModels"
+        xmlns:m="clr-namespace:ZombieGame.Models"
+        Title="{Binding Title}" Height="900" Width="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding MyKeyDown}" CommandParameter="W" Key="W"/>
+        <KeyBinding Command="{Binding MyKeyDown}" CommandParameter="A" Key="A"/>
+        <KeyBinding Command="{Binding MyKeyDown}" CommandParameter="S" Key="S"/>
+        <KeyBinding Command="{Binding MyKeyDown}" CommandParameter="D" Key="D"/>
+    </Window.InputBindings>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Background="Black" >
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="FontSize" Value="18"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Margin="20,20,0,0" Text="Игрок "/>
+            <TextBlock Grid.Column="1" Margin="10,20,0,0" Text="{Binding UserVM.Name}"/>
+            <!--, Converter={}-->
+            <TextBlock Grid.Column="2" Margin="20,20,0,0" Text="HP:"/>
+            <TextBlock Grid.Column="3" Margin="10,20,0,0" Text="{Binding UserVM.HealsPoint}"/>
+            <TextBlock Grid.Column="4" Margin="20,20,0,0" Text=", Убитых зомби: "/>
+            <TextBlock Grid.Column="5" Margin="10,20,0,0" Text="{Binding ZombieDeathCount}"/>
+            <TextBlock Grid.Column="6" Margin="20,20,0,0" Text=", Атакующих зомби:"/>
+            <TextBlock Grid.Column="7" Margin="10,20,0,0" Text="{Binding ZombieCount}"/>
+            <Button Grid.Column="8" Margin="15" FontSize="18" Padding="20,0,20,0" HorizontalAlignment="Right"  Background="Red"
+                    Command="{Binding NewGameCommand}">New Game</Button>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" Grid.RowSpan="10">
+            <ItemsControl ItemsSource="{Binding BameObjectsListVM}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid ShowGridLines="True">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <ItemContainerTemplate>
+
+                            <!--моделька персонажа-->
+                        <Grid Grid.Column="{Binding UserVM.Position.X}" Grid.Row="{Binding UserVM.Position.Y}"
+                        Name="GridUser"
+                  RenderTransformOrigin="0.5,0.5">
+                            <!--
+                            не работает(((
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="{Binding UserVM.Angle}"/>
+                                </TransformGroup>
+                            </Grid.RenderTransform>-->
+                            
+                            <!--не работает!(((-->
+                            <Grid.RenderTransform>
+                                <RotateTransform Angle="{Binding Path=UserVM.Angle}" x:Name="GridAngle"/>
+                            </Grid.RenderTransform>
+                            <Ellipse Height="Auto" Fill="GreenYellow"/>
+                            <TextBlock Text="{Binding UserVM.Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Polygon Fill="Red" Points="0,30,10,-5,20,-5,30,30" Margin="25,0" />
+                        </Grid>
+                    </ItemContainerTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ItemContainerTemplate">
+                        <Setter Property="Grid.Row" Value="{Binding Path=Position.Y}"/>
+                        <Setter Property="Grid.Column" Value="{Binding Path=Position.X}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=Angle}" Value="90">
+                                <!--он его снова не видит-->
+                                <Setter Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="45"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                        <!--
+                        
+                        
+                        
+                        нет доступа
+                        <Setter Property="RenderTransform.Angle" Value="{Binding Path=UserVM.Angle}"/>-->
+
+
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+
+
+            </ItemsControl>
+
+
+
+        </Grid>
+
+    </Grid>
+</Window>
