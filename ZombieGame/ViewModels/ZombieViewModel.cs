@@ -6,8 +6,8 @@ namespace ZombieGame.ViewModels
 {
     class ZombieViewModel : BaseGameObjectViewModel
     {
-        
-        
+        public Type Type = Type.Zombie;
+
         public void RandomStep()
         {
             var v = rnd.Next(0,4);

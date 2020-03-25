@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using ZombieGame.ViewModels.Base;
 
-namespace ZombieGame.ViewModels.Base
+namespace ZombieGame.ViewModels
 {
     class BaseGameObjectViewModel : ViewModel
     {
@@ -21,11 +22,15 @@ namespace ZombieGame.ViewModels.Base
             get => _Position;
             set => Set(ref _Position, value);
         }
-        private Direction _Direction = Direction.LEFT;
+        private Direction _Direction;// = Direction.LEFT;
         public Direction Direction
         {
             get => _Direction;
-            set => Set(ref _Direction, value);
+            set
+            {
+                Set(ref _Direction, value);
+                OnPropertyChanged("Angle");
+            }
         }
         public int Angle
         {
@@ -97,5 +102,10 @@ namespace ZombieGame.ViewModels.Base
         RIGHT,
         UP,
         DOWN
+    }
+    enum Type
+    {
+        User,
+        Zombie
     }
 }

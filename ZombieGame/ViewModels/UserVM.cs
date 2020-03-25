@@ -5,7 +5,7 @@ namespace ZombieGame.ViewModels
 {
     internal class UserVM : BaseGameObjectViewModel
     {
-        
+        public Type Type = Type.User;
     }
 
     

@@ -74,7 +74,7 @@
                     Command="{Binding NewGameCommand}">New Game</Button>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" Grid.RowSpan="10">
-            <ItemsControl ItemsSource="{Binding ZombieListVM}">
+            <ItemsControl ItemsSource="{Binding BameObjectsListVM}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid ShowGridLines="True">
@@ -105,30 +105,62 @@
                         </Grid>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <ItemContainerTemplate>
+
+                            <!--моделька персонажа-->
+                        <Grid Grid.Column="{Binding UserVM.Position.X}" Grid.Row="{Binding UserVM.Position.Y}"
+                        Name="GridUser"
+                  RenderTransformOrigin="0.5,0.5">
+                            <!--
+                            не работает(((
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="{Binding UserVM.Angle}"/>
+                                </TransformGroup>
+                            </Grid.RenderTransform>-->
+                            
+                            <!--не работает!(((-->
+                            <Grid.RenderTransform>
+                                <RotateTransform Angle="{Binding Path=UserVM.Angle}" x:Name="GridAngle"/>
+                            </Grid.RenderTransform>
+                            <Ellipse Height="Auto" Fill="GreenYellow"/>
+                            <TextBlock Text="{Binding UserVM.Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Polygon Fill="Red" Points="0,30,10,-5,20,-5,30,30" Margin="25,0" />
+                        </Grid>
+                    </ItemContainerTemplate>
+                </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemContainerStyle>
-                    <Style>
-                        <Setter Property="Grid.Row" Value="{Binding Path=Position.X}"/>
-                        <Setter Property="Grid.Column" Value="{Binding Path=Position.Y}"/>
+                    <Style TargetType="ItemContainerTemplate">
+                        <Setter Property="Grid.Row" Value="{Binding Path=Position.Y}"/>
+                        <Setter Property="Grid.Column" Value="{Binding Path=Position.X}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=Angle}" Value="90">
+                                <!--он его снова не видит-->
+                                <Setter Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="45"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                        <!--
+                        
+                        
+                        
+                        нет доступа
+                        <Setter Property="RenderTransform.Angle" Value="{Binding Path=UserVM.Angle}"/>-->
+
+
                     </Style>
                 </ItemsControl.ItemContainerStyle>
 
-                <!--моделька персонажа-->
-                <Grid Grid.Column="{Binding UserVM.Position.X}" Grid.Row="{Binding UserVM.Position.Y}"
-                  RenderTransformOrigin="0.5,0.5">
-                    <Grid.RenderTransform>
-                        <TransformGroup>
-                            <RotateTransform Angle="{Binding UserVM.Angle}"/>
-                        </TransformGroup>
-                    </Grid.RenderTransform>
-                    <Ellipse Height="Auto" Fill="GreenYellow"/>
-                    <TextBlock Text="{Binding UserVM.Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Polygon Fill="Red" Points="0,30,10,-5,20,-5,30,30" Margin="25,0" />
-                </Grid>
+
             </ItemsControl>
 
 
-            
+
         </Grid>
-        
+
     </Grid>
 </Window>
